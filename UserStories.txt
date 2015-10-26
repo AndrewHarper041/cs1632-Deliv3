@@ -11,6 +11,28 @@ As a new GitHub user
 I want to be able to create a new account
 So that I can use features that require an account.
 
+-- Scenario 1:
+Given a not previously logged in or registed on github.com,
+When they click the sign up button,
+Then they will be directed to a page where they can sign up.
+
+-- Scenario 2:
+Given a user on the sign up screen without filling in all values of the log in form,
+When the create account button is pressed,
+Then the user will be prompted to fill out the needed values of the form. 
+
+-- Scenario 3:
+Given that the sign up form has username/email/password fields filled out with unique name/email and password to specification,
+When the create account button is pressed,
+Then a new user will be created under that username.
+
+-- Scenario 4:
+Given a user attempting to create an account with a user name that already exists,
+When the username field contains an existing user name,
+Then the new user will be prompted to provide an unique name.
+
+-- Scenario 5:
+
 ----------------------
 -- User Story #2:
 ----------------------
@@ -20,7 +42,15 @@ I want to be able to create a new repository
 So that I can use GitHubs repo hosting features.
 
 -- Scenario 1:
+Given a logged in user on the main github.com page,
+When the create new repository button is pressed,
+Then the user will be navigated to the create new repository form.
+
 -- Scenario 2:
+Given 
+When 
+Then 
+
 -- Scenario 3:
 -- Scenario 4:
 -- Scenario 5:
