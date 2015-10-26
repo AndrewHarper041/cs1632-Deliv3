@@ -1,0 +1,54 @@
+----------------------
+-- Andrew Harper adh41
+-- Austin Choi
+----------------------
+
+----------------------
+-- User Story #1:
+----------------------
+    
+As a new GitHub user
+I want to be able to create a new account
+So that I can use features that require an account.
+
+----------------------
+-- User Story #2:
+----------------------
+
+As a registered GitHub user
+I want to be able to create a new repository
+So that I can use GitHubs repo hosting features.
+
+-- Scenario 1:
+-- Scenario 2:
+-- Scenario 3:
+-- Scenario 4:
+-- Scenario 5:
+
+----------------------
+-- User Story #3:
+---------------------- 
+
+As a registered GitHub user
+I want to be able to view and edit repository settings
+So that I can get a repo set up to my specifications.
+
+-- Scenario 1:
+-- Scenario 2:
+-- Scenario 3:
+-- Scenario 4:
+-- Scenario 5:
+
+----------------------
+-- User Story #4:
+----------------------
+
+As a registered GitHub user
+I want to be able to follow repositories
+So that I can get updates on work done on interesting projects.
+
+-- Scenario 1:
+-- Scenario 2:
+-- Scenario 3:
+-- Scenario 4:
+-- Scenario 5:
