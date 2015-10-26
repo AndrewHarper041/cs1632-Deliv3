@@ -24,7 +24,7 @@ Then the user will be prompted to fill out the needed values of the form.
 -- Scenario 3:
 Given that the sign up form has username/email/password fields filled out with unique name/email and password to specification,
 When the create account button is pressed,
-Then a new user will be created under that username.
+Then a new user will be created under that username and user will be navigate to plan selection.
 
 -- Scenario 4:
 Given a user attempting to create an account with a user name that already exists,
