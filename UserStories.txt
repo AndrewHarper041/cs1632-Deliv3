@@ -32,6 +32,9 @@ When the username field contains an existing user name,
 Then the new user will be prompted to provide an unique name.
 
 -- Scenario 5:
+Given a user attempting to create an account with a valid user name,
+When the password input is not valid,
+Then the user will be prompted and told what the password requirements are.
 
 ----------------------
 -- User Story #2:
