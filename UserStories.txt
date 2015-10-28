@@ -64,13 +64,38 @@ Then the user will be navigated to the page for the newly created repository.
 
 As a registered GitHub user
 I want to be able to view and edit repository settings
-So that I can get a repository set up to my specifications.
+So that I can get my repository set up to my specifications and perform administerial actions.
 
 -- Scenario 1:
+Given a logged in user with a repo,
+When a user naviagates to the options page,
+Then they will be able to toggle the different features settings as desired.
+
 -- Scenario 2:
+Given a logged in user with a repo,
+When a user naviagates to the collaborator page and fills the form with the identity of a github user,
+Then the specefies user will be added as an approved user or the repo.
+
 -- Scenario 3:
+Given a logged in user with a repo,
+When a user naviagates to the webhooks and services page and clicks add webhook,
+Then the user will be able to create a new webhook to specification.
+
 -- Scenario 4:
--- Scenario 5:
+Given a logged in user with a repo,
+When a user naviagates to the add deploy key page,
+Then the user will be able to add a new deploy key to the repo.
+
+-- Scenario 5: 
+Given a logged in user with a repo,
+When a user naviagates to the options page and clicks on the transfer ownership button,
+Then they will be able to select a new user and transer owner rights of the repo to them.
+
+-- Scenario 6: 
+Given a logged in user with a repo,
+When a user naviagates to the options page and clicks on the delete repo button,
+Then they will be able delete their repo.
+
 
 ----------------------
 -- User Story #4:
