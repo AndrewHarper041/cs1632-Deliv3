@@ -42,7 +42,7 @@ Then the user will be prompted and told what the password requirements are.
 
 As a registered GitHub user
 I want to be able to create a new repository
-So that I can use GitHubs repo hosting features.
+So that I can use GitHub's repo hosting features.
 
 -- Scenario 1:
 Given a logged in user on the main github.com page,
@@ -50,9 +50,9 @@ When the create new repository button is pressed,
 Then the user will be navigated to the create new repository form.
 
 -- Scenario 2:
-Given 
-When 
-Then 
+Given a logged in user on the new repository page,
+When the user fills out the form and the create repository is pressed,
+Then the user will be navigated to the page for the newly created repository.
 
 -- Scenario 3:
 -- Scenario 4:

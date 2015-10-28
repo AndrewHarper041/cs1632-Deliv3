@@ -7,7 +7,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class NewRepoForm {
+public class MakeNewRepo {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -32,22 +32,38 @@ public class NewRepoForm {
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     logIn(USERNAME, PASSWORD);
   }
-
-  /**
-   * Test that the new repository button leads us to the repository creation page.
-   * @throws Exception
-   */
+  
+/**
+ * Test that we can successfully make a new repository. 
+ * We know the creation is successful if we land on the repository's page after creation.
+ */
   @Test
-  public void testNewRepoForm() throws Exception {
-        // New repository button
-        driver.findElement(By.xpath("//div[@id='your_repos']/div/a")).click();
-        String observed = driver.getCurrentUrl();
-        String expected = "https://github.com/new";
-        assertEquals(expected, observed);
+  public void testMakeNewRepo() throws Exception {
+	  	// Make repository
+	    driver.get("https://github.com/new");
+	    driver.findElement(By.id("repository_name")).clear();
+	    driver.findElement(By.id("repository_name")).sendKeys("testrepo");
+	    driver.findElement(By.id("repository_description")).clear();
+	    driver.findElement(By.id("repository_description")).sendKeys("very nice");
+	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	    // Make sure we are on the new repo page
+	    String expected = "https://github.com/" + USERNAME + "/testrepo";
+	    String observed = driver.getCurrentUrl();
+	    assertEquals(expected, observed);
+  }
+  
+  
+  private void deleteRepository() {
+	    driver.findElement(By.xpath("(//a[contains(@href, '/pittqa/testrepo/settings')])[2]")).click();
+	    driver.findElement(By.linkText("Delete this repository")).click();
+	    driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).clear();
+	    driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys("testrepo");
+	    driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();	  
   }
 
   @After
   public void tearDown() throws Exception {
+	deleteRepository();
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {
