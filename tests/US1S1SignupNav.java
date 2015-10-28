@@ -1,3 +1,6 @@
+//Test for US-1 Scenario-1
+//Checks that not logged in users are able to navigate to the new user sign up page
+
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
@@ -7,43 +10,24 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class NewRepoForm {
+public class US1S1SignupNav {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
-  
-  private static final String USERNAME = "pittqa";
-  private static final String PASSWORD = "pittqa1";
-  private void logIn(String username, String password) {
-	  driver.get(baseUrl + "/");
-	  driver.findElement(By.linkText("Sign in")).click();
-      driver.findElement(By.id("login_field")).clear();
-      driver.findElement(By.id("login_field")).sendKeys(username);
-      driver.findElement(By.id("password")).clear();
-      driver.findElement(By.id("password")).sendKeys(password);
-      driver.findElement(By.name("commit")).click();
-  }
 
   @Before
   public void setUp() throws Exception {
     driver = new FirefoxDriver();
     baseUrl = "https://github.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-    logIn(USERNAME, PASSWORD);
   }
 
-  /**
-   * Test that the new repository button leads us to the repository creation page.
-   * @throws Exception
-   */
   @Test
-  public void testNewRepoForm() throws Exception {
-        // New repository button
-        driver.findElement(By.xpath("//div[@id='your_repos']/div/a")).click();
-        String observed = driver.getCurrentUrl();
-        String expected = "https://github.com/new";
-        assertEquals(expected, observed);
+  public void testSignupNav() throws Exception {
+        driver.get(baseUrl + "/");
+        driver.findElement(By.linkText("Sign up")).click();
+        assertTrue(isElementPresent(By.id("signup_button")));
   }
 
   @After

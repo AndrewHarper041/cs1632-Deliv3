@@ -1,3 +1,7 @@
+//Test for US-1 Scenario-2
+//Tests that a logged in user can successfully make a repo
+
+
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
@@ -7,7 +11,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class MakeNewRepo {
+public class US2S2MakeNewRepo {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;

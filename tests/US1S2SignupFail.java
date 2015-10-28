@@ -1,3 +1,5 @@
+//Test for US-1 Scenario-2
+//Checks when a new user does not fill out the form, that no user is created and user is prompted about what went wrong
 
 
 import java.util.regex.Pattern;
@@ -9,7 +11,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class NameExists {
+public class US1S2SignupFail {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -23,12 +25,11 @@ public class NameExists {
   }
 
   @Test
-  public void testNameExists() throws Exception {
+  public void testSignupFail() throws Exception {
         driver.get(baseUrl + "/");
         driver.findElement(By.linkText("Sign up")).click();
-        driver.findElement(By.id("user_login")).clear();
-        driver.findElement(By.id("user_login")).sendKeys("laboon");
-        assertEquals("Username is already taken", driver.findElement(By.cssSelector("dd.error")).getText());
+        driver.findElement(By.id("signup_button")).click();
+        assertTrue(isElementPresent(By.cssSelector("div.flash.flash-error")));
   }
 
   @After

@@ -1,5 +1,8 @@
+//Test for US-1 Scenario-4
+//Tests that the new user sign up page successfully notifies user when they attempt to use an already existing name
 
-
+//CURRENTLY DOES NOT WORK OUTSIDE OF SELENIUM
+//The name 'laboon' is entered, but it does not evoke the error dialog with manual typing it seems
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
@@ -9,7 +12,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class SignupNav {
+public class US1S4NameExists {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -23,10 +26,12 @@ public class SignupNav {
   }
 
   @Test
-  public void testSignupNav() throws Exception {
+  public void testNameExists() throws Exception {
         driver.get(baseUrl + "/");
         driver.findElement(By.linkText("Sign up")).click();
-        assertTrue(isElementPresent(By.id("signup_button")));
+        driver.findElement(By.id("user_login")).clear();
+        driver.findElement(By.id("user_login")).sendKeys("laboon");
+        assertEquals("Username is already taken", driver.findElement(By.cssSelector("dd.error")).getText());
   }
 
   @After
