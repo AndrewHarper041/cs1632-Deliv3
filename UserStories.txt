@@ -55,6 +55,9 @@ When the user fills out the form and the create repository is pressed,
 Then the user will be navigated to the page for the newly created repository.
 
 -- Scenario 3:
+Given a logged in user on the new repository page with an already-created repo,
+When the user tries to create a new repository with the same name
+Then the user will remain on the same page without any changes.
 -- Scenario 4:
 -- Scenario 5:
 
