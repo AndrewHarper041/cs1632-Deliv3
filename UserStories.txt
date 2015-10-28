@@ -1,6 +1,6 @@
 ----------------------
 -- Andrew Harper adh41
--- Austin Choi
+-- Austin Choi auc5
 ----------------------
 
 ----------------------
@@ -12,7 +12,7 @@ I want to be able to create a new account
 So that I can use features that require an account.
 
 -- Scenario 1:
-Given a not previously logged in or registed on github.com,
+Given a not previously logged in or registered on github.com,
 When they click the sign up button,
 Then they will be directed to a page where they can sign up.
 
@@ -64,7 +64,7 @@ Then
 
 As a registered GitHub user
 I want to be able to view and edit repository settings
-So that I can get a repo set up to my specifications.
+So that I can get a repository set up to my specifications.
 
 -- Scenario 1:
 -- Scenario 2:

@@ -1,4 +1,4 @@
-package com.example.tests;
+
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +9,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class InvalidPassword {
+public class NameExists {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -23,14 +23,12 @@ public class InvalidPassword {
   }
 
   @Test
-  public void testInvalidPassword() throws Exception {
+  public void testNameExists() throws Exception {
         driver.get(baseUrl + "/");
         driver.findElement(By.linkText("Sign up")).click();
         driver.findElement(By.id("user_login")).clear();
-        driver.findElement(By.id("user_login")).sendKeys("uniqueusername32");
-        driver.findElement(By.id("user_password")).clear();
-        driver.findElement(By.id("user_password")).sendKeys("abd");
-        assertEquals("Password is too short (minimum is 7 characters) and needs at least one number", driver.findElement(By.cssSelector("dd.error")).getText());
+        driver.findElement(By.id("user_login")).sendKeys("laboon");
+        assertEquals("Username is already taken", driver.findElement(By.cssSelector("dd.error")).getText());
   }
 
   @After

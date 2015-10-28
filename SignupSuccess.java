@@ -1,4 +1,4 @@
-package com.example.tests;
+
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +9,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class NameExists {
+public class SignupSuccess {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -23,12 +23,26 @@ public class NameExists {
   }
 
   @Test
-  public void testNameExists() throws Exception {
+  public void testSignupSuccess() throws Exception {
         driver.get(baseUrl + "/");
         driver.findElement(By.linkText("Sign up")).click();
         driver.findElement(By.id("user_login")).clear();
-        driver.findElement(By.id("user_login")).sendKeys("laboon");
-        assertEquals("Username is already taken", driver.findElement(By.cssSelector("dd.error")).getText());
+        driver.findElement(By.id("user_login")).sendKeys("fakeRoboUser");
+        driver.findElement(By.id("user_email")).clear();
+        driver.findElement(By.id("user_email")).sendKeys("fake@temp.com");
+        driver.findElement(By.id("user_password")).clear();
+        driver.findElement(By.id("user_password")).sendKeys("fakepassword1");
+        driver.findElement(By.id("signup_button")).click();
+        assertEquals("Finish sign up", driver.findElement(By.xpath("//div[@id='js-pjax-container']/div/div[2]/div/form/div[4]/button")).getText());
+        driver.findElement(By.xpath("//ul[@id='user-links']/li[3]/a/span")).click();
+        driver.findElement(By.linkText("Settings")).click();
+        driver.findElement(By.linkText("Account settings")).click();
+        driver.findElement(By.linkText("Delete your account")).click();
+        driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form > p > #sudo_login")).clear();
+        driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form > p > #sudo_login")).sendKeys("fakeRoboUser");
+        driver.findElement(By.xpath("(//input[@id='confirmation_phrase'])[2]")).clear();
+        driver.findElement(By.xpath("(//input[@id='confirmation_phrase'])[2]")).sendKeys("delete my account");
+        driver.findElement(By.xpath("(//button[@type='submit'])[3]")).click();
   }
 
   @After
