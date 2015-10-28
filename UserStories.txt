@@ -96,7 +96,6 @@ Given a logged in user with a repo,
 When a user naviagates to the options page and clicks on the delete repo button,
 Then they will be able delete their repo.
 
-
 ----------------------
 -- User Story #4:
 ----------------------
