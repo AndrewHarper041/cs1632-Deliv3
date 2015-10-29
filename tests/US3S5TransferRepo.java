@@ -36,6 +36,24 @@ public class US3S5TransferRepo {
       driver.findElement(By.id("password")).sendKeys(password);
       driver.findElement(By.name("commit")).click();
   }
+  
+  private void deleteRepo() {
+	  driver.get(baseUrl + "/");
+	  driver.findElement(By.cssSelector("span.repo")).click();
+	  driver.findElement(By.xpath("(//a[contains(@href, '/cs1632user/temprepo/settings')])[2]")).click();
+	  driver.findElement(By.linkText("Delete this repository")).click();
+	  driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).clear();
+	  driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys("cs1632user/temprepo");
+	  driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();
+  }
+  
+  private void createRepo() {
+	  driver.get(baseUrl + "/");
+      driver.findElement(By.xpath("//div[@id='your_repos']/div/a")).click();
+      driver.findElement(By.id("repository_name")).clear();
+      driver.findElement(By.id("repository_name")).sendKeys("temprepo");
+      driver.findElement(By.xpath("//button[@type='submit']")).click();
+  }
 
   @Before
   public void setUp() throws Exception {
@@ -43,6 +61,7 @@ public class US3S5TransferRepo {
     baseUrl = "https://github.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     logIn(USERNAME, PASSWORD); //login
+    createRepo(); //Make temp repo
   }
 
   @Test
@@ -55,12 +74,18 @@ public class US3S5TransferRepo {
         driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form > dl.form > dd > #confirm_repository_name")).sendKeys("temprepo");
         driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form > dl.form > dd > #confirm_new_owner")).clear();
         driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form > dl.form > dd > #confirm_new_owner")).sendKeys("graphitezeppelin");
+        
+        //Hack to trigger the onchange javascript event we are looking for.
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("$(arguments[0]).change();", driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form > dl.form > dd > #confirm_new_owner")));
+        
         driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();
         assertEquals("This repository is being transferred to @graphitezeppelin.", driver.findElement(By.xpath("//div[@id='options_bucket']/div[4]/div/p[2]")).getText());
   }
 
   @After
   public void tearDown() throws Exception {
+	deleteRepo(); //delete temp repo
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {
