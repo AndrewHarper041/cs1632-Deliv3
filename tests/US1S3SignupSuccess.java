@@ -1,6 +1,9 @@
 //Test for US-1 Scenario-3
 //Checks when given a unique user name, a new user will be created
-//NOTE: if user name is in use (taken by another user or if the automatic deletion of the new user fails), the test will fail.
+
+//NOTEs: 
+//If user name is in use (taken by another user or if the automatic deletion of the new user fails), the test will fail.
+//Make sure that the user is always deleted at the end, or it will fail without manual intervention
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
