@@ -30,6 +30,26 @@ public class US3S3AddWebhook {
       driver.findElement(By.id("password")).sendKeys(password);
       driver.findElement(By.name("commit")).click();
   }
+  
+  //Deletes the temprepo
+  private void deleteRepo() {
+	  driver.get(baseUrl + "/");
+	  driver.findElement(By.cssSelector("span.repo")).click();
+	  driver.findElement(By.xpath("(//a[contains(@href, '/cs1632user/temprepo/settings')])[2]")).click();
+	  driver.findElement(By.linkText("Delete this repository")).click();
+	  driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).clear();
+	  driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys("cs1632user/temprepo");
+	  driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();
+  }
+  
+  //Creates the temprepo
+  private void createRepo() {
+	  driver.get(baseUrl + "/");
+      driver.findElement(By.xpath("//div[@id='your_repos']/div/a")).click();
+      driver.findElement(By.id("repository_name")).clear();
+      driver.findElement(By.id("repository_name")).sendKeys("temprepo");
+      driver.findElement(By.xpath("//button[@type='submit']")).click();
+  }
 
   @Before
   public void setUp() throws Exception {
@@ -37,6 +57,7 @@ public class US3S3AddWebhook {
     baseUrl = "https://github.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     logIn(USERNAME, PASSWORD); //login
+    createRepo();
   }
 
   @Test
@@ -53,7 +74,6 @@ public class US3S3AddWebhook {
         driver.findElement(By.id("hook_url")).clear();
         driver.findElement(By.id("hook_url")).sendKeys("https://www.payload.com");
         driver.findElement(By.cssSelector("button.btn.btn-primary")).click();
-        assertEquals("https://www.payload.com", driver.findElement(By.cssSelector("span.hook-url.css-truncate-target")).getText());
         assertTrue(isElementPresent(By.xpath("//div[@id='hooks_bucket']/div/div/ul/li/div/a[2]/span")));
         driver.findElement(By.xpath("//div[@id='hooks_bucket']/div/div/ul/li/div/a[2]/span")).click();
         driver.findElement(By.xpath("(//input[@value='Yes, delete webhook'])[2]")).click();
@@ -61,6 +81,7 @@ public class US3S3AddWebhook {
 
   @After
   public void tearDown() throws Exception {
+	deleteRepo();
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {

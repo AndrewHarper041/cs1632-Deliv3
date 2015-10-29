@@ -34,6 +34,15 @@ public class US3S6DeleteRepo {
       driver.findElement(By.id("password")).sendKeys(password);
       driver.findElement(By.name("commit")).click();
   }
+  
+  //Creates the temprepo
+  private void createRepo() {
+	  driver.get(baseUrl + "/");
+      driver.findElement(By.xpath("//div[@id='your_repos']/div/a")).click();
+      driver.findElement(By.id("repository_name")).clear();
+      driver.findElement(By.id("repository_name")).sendKeys("temprepo");
+      driver.findElement(By.xpath("//button[@type='submit']")).click();
+  }
 
   @Before
   public void setUp() throws Exception {
@@ -41,6 +50,7 @@ public class US3S6DeleteRepo {
     baseUrl = "https://github.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     logIn(USERNAME, PASSWORD); //login
+    createRepo(); //this got silly somewhere
   }
 
   @Test

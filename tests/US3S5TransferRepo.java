@@ -37,6 +37,16 @@ public class US3S5TransferRepo {
       driver.findElement(By.name("commit")).click();
   }
   
+  public void abortTransfer() {
+      driver.get(baseUrl + "/");
+      driver.findElement(By.id("your-repos-filter")).clear();
+      driver.findElement(By.id("your-repos-filter")).sendKeys("temprepo");
+      driver.findElement(By.linkText("temprepo")).click();
+      driver.findElement(By.xpath("(//a[contains(@href, '/cs1632user/temprepo/settings')])[2]")).click();
+      driver.findElement(By.cssSelector("button.btn.boxed-action")).click();
+      driver.findElement(By.cssSelector("span.mega-octicon.octicon-mark-github")).click();
+}
+  
   private void deleteRepo() {
 	  driver.get(baseUrl + "/");
 	  driver.findElement(By.cssSelector("span.repo")).click();

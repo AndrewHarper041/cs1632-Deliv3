@@ -34,6 +34,26 @@ public class US3S2AddCollaborator {
       driver.findElement(By.id("password")).sendKeys(password);
       driver.findElement(By.name("commit")).click();
   }
+  
+  //Deletes the temprepo
+  private void deleteRepo() {
+	  driver.get(baseUrl + "/");
+	  driver.findElement(By.cssSelector("span.repo")).click();
+	  driver.findElement(By.xpath("(//a[contains(@href, '/cs1632user/temprepo/settings')])[2]")).click();
+	  driver.findElement(By.linkText("Delete this repository")).click();
+	  driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).clear();
+	  driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys("cs1632user/temprepo");
+	  driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();
+  }
+  
+  //Creates the temprepo
+  private void createRepo() {
+	  driver.get(baseUrl + "/");
+      driver.findElement(By.xpath("//div[@id='your_repos']/div/a")).click();
+      driver.findElement(By.id("repository_name")).clear();
+      driver.findElement(By.id("repository_name")).sendKeys("temprepo");
+      driver.findElement(By.xpath("//button[@type='submit']")).click();
+  }
 
   @Before
   public void setUp() throws Exception {
@@ -41,14 +61,15 @@ public class US3S2AddCollaborator {
     baseUrl = "https://github.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     logIn(USERNAME, PASSWORD); //login
+    createRepo();
   }
 
   @Test
   public void testUS3S2AddCollaborator() throws Exception {
 	  driver.get(baseUrl + "/");
       driver.findElement(By.id("your-repos-filter")).clear();
-      driver.findElement(By.id("your-repos-filter")).sendKeys("newrepo");
-      driver.findElement(By.xpath("//ul[@id='repo_listing']/li[2]/a/span[2]/span")).click();
+      driver.findElement(By.id("your-repos-filter")).sendKeys("temprepo"); //rewritten to temp repo, and added the create/delete repo actions on startup and close
+      driver.findElement(By.xpath("//ul[@id='repo_listing']/li[2]/a/span[1]/span")).click();
       driver.findElement(By.xpath("//ul[3]/li/a/span[2]")).click();
       driver.findElement(By.linkText("Collaborators")).click();
       driver.findElement(By.id("search-member")).clear();
@@ -67,6 +88,7 @@ public class US3S2AddCollaborator {
 
   @After
   public void tearDown() throws Exception {
+	deleteRepo();
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {

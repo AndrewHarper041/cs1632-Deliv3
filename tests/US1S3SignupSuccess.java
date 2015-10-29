@@ -19,6 +19,13 @@ public class US1S3SignupSuccess {
   private String baseUrl;
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
+  
+  //Deletes user on close
+  public void deleteUser()
+  {
+	  
+  }
+  
 
   @Before
   public void setUp() throws Exception {
@@ -37,6 +44,11 @@ public class US1S3SignupSuccess {
         driver.findElement(By.id("user_email")).sendKeys("fake@temp.com");
         driver.findElement(By.id("user_password")).clear();
         driver.findElement(By.id("user_password")).sendKeys("fakepassword1");
+        
+        //Hack to trigger the onchange javascript event we are looking for.
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("$(arguments[0]).change();", driver.findElement(By.id("user_password")));
+        
         driver.findElement(By.id("signup_button")).click();
         assertEquals("Finish sign up", driver.findElement(By.xpath("//div[@id='js-pjax-container']/div/div[2]/div/form/div[4]/button")).getText());
         driver.findElement(By.xpath("//ul[@id='user-links']/li[3]/a/span")).click();
@@ -47,11 +59,17 @@ public class US1S3SignupSuccess {
         driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form > p > #sudo_login")).sendKeys("fakeRoboUser");
         driver.findElement(By.xpath("(//input[@id='confirmation_phrase'])[2]")).clear();
         driver.findElement(By.xpath("(//input[@id='confirmation_phrase'])[2]")).sendKeys("delete my account");
+        
+        //Hack to trigger the onchange javascript event we are looking for.
+        JavascriptExecutor jsExecutor1 = (JavascriptExecutor) driver;
+        jsExecutor1.executeScript("$(arguments[0]).change();", driver.findElement(By.xpath("(//input[@id='confirmation_phrase'])[2]")));
+        
         driver.findElement(By.xpath("(//button[@type='submit'])[3]")).click();
   }
 
   @After
   public void tearDown() throws Exception {
+	deleteUser();
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {
