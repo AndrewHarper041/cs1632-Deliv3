@@ -1,0 +1,6 @@
+US2U3DuplicateRepo still broken on repo already exists
+US3S3 broke on clicking 'temprepo'
+US2S5 broken on delete repo, never gets to repo settings screen
+US3S1 breaks on selecting new repo
+US4S4 breaks
+US2S2 breaks
