@@ -8,11 +8,12 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
-<tr><td><a href="tests/signupNav.html">signupNav</a></td></tr>
-<tr><td><a href="tests/signupFail.html">signupFail</a></td></tr>
-<tr><td><a href="tests/signupSuccess.html">signupSuccess</a></td></tr>
-<tr><td><a href="tests/nameExists.html">nameExists</a></td></tr>
-<tr><td><a href="GitHubTestSuite">invalidPassword</a></td></tr>
+<tr><td><a href="../FeaturesToggle.html">US3S1FeaturesToggle</a></td></tr>
+<tr><td><a href="../AddCollaborator.html">US3S2AddCollaborator</a></td></tr>
+<tr><td><a href="../AddWebHook.html">US3S3AddWebhook</a></td></tr>
+<tr><td><a href="../AddDeployKey.html">US3S4AddDeployKey</a></td></tr>
+<tr><td><a href="../TransferRepo.html">US3US5TransferRepo</a></td></tr>
+<tr><td><a href="../DeleteRepo.html">US3US5DeleteRepo</a></td></tr>
 </tbody></table>
 </body>
 </html>
