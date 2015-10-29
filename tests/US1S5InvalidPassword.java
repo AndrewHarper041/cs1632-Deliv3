@@ -1,6 +1,9 @@
 //Test for US-1 Scenario-5
 //Tests that the new user sign up page successfully notifies user when they attempt to use an invalid password
 
+//Notes:
+//Failed before adding a hack to induce onchange() JS events
+
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
@@ -31,6 +34,11 @@ public class US1S5InvalidPassword {
         driver.findElement(By.id("user_login")).sendKeys("uniqueusername32");
         driver.findElement(By.id("user_password")).clear();
         driver.findElement(By.id("user_password")).sendKeys("abd");
+        
+        //Hack to trigger the onchange javascript event we are looking for.
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("$(arguments[0]).change();", driver.findElement(By.id("user_password")));
+        
         assertEquals("Password is too short (minimum is 7 characters) and needs at least one number", driver.findElement(By.cssSelector("dd.error")).getText());
   }
 

@@ -14,17 +14,33 @@ public class US3S2AddCollaborator {
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
 
+  //Hardcoded auth for 'permenent' user. Hopefully a bot doesn't steal this account.
+  private static final String USERNAME = "cs1632user";
+  private static final String PASSWORD = "cs1632pass";
+  
+  //Utility function
+  private void logIn(String username, String password) {
+	  driver.get(baseUrl + "/");
+	  driver.findElement(By.linkText("Sign in")).click();
+      driver.findElement(By.id("login_field")).clear();
+      driver.findElement(By.id("login_field")).sendKeys(username);
+      driver.findElement(By.id("password")).clear();
+      driver.findElement(By.id("password")).sendKeys(password);
+      driver.findElement(By.name("commit")).click();
+  }
+
   @Before
   public void setUp() throws Exception {
     driver = new FirefoxDriver();
     baseUrl = "https://github.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    logIn(USERNAME, PASSWORD); //login
   }
 
   @Test
   public void testUS3S2AddCollaborator() throws Exception {
         driver.get(baseUrl + "/");
-        driver.findElement(By.xpath("(//a[contains(@href, '/cs1632user/temprepo/settings')])[2]")).click();
+        driver.findElement(By.xpath("(//a[contains(@href, '/cs1632user/newrepo/settings')])[2]")).click(); //failed on temprepo, switched to newrepo
         driver.findElement(By.linkText("Collaborators")).click();
         driver.findElement(By.id("search-member")).clear();
         driver.findElement(By.id("search-member")).sendKeys("graphitezep");
