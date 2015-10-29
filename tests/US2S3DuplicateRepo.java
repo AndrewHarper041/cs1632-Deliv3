@@ -1,5 +1,5 @@
-//Test for US-2 Scenario-2
-//Tests that a logged in user can successfully make a repo
+//Test for US-2 Scenario-3
+// Test to make sure we are not allowed to create a duplicate repository
 
 
 import java.util.regex.Pattern;
@@ -11,7 +11,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class US2S2MakeNewRepo {
+public class US2S3DuplicateRepo {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -36,6 +36,14 @@ public class US2S2MakeNewRepo {
 	    driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys(repo);
 	    driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();	  
 }
+  private void createRepository(String username, String password, String repo) {
+	    driver.get("https://github.com/new");
+	    driver.findElement(By.id("repository_name")).clear();
+	    driver.findElement(By.id("repository_name")).sendKeys(repo);
+	    driver.findElement(By.id("repository_description")).clear();
+	    driver.findElement(By.id("repository_description")).sendKeys("very nice");
+	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+  }
 
   @Before
   public void setUp() throws Exception {
@@ -43,25 +51,21 @@ public class US2S2MakeNewRepo {
     baseUrl = "https://github.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     logIn(USERNAME, PASSWORD);
+    createRepository(USERNAME, PASSWORD, REPO); // Make first copy
   }
   
 /**
- * Test that we can successfully make a new repository. 
- * We know the creation is successful if we land on the repository's page after creation.
+ * Test to make sure we are not allowed to create a duplicate repository
+ * We know this is true if we are stuck on the same page when we try to make a duplicate.
  */
   @Test
-  public void testMakeNewRepo() throws Exception {
-	  	// Make repository
+  public void testDuplicateRepo() throws Exception {
 	    driver.get("https://github.com/new");
 	    driver.findElement(By.id("repository_name")).clear();
 	    driver.findElement(By.id("repository_name")).sendKeys(REPO);
-	    driver.findElement(By.id("repository_description")).clear();
-	    driver.findElement(By.id("repository_description")).sendKeys("very nice");
 	    driver.findElement(By.xpath("//button[@type='submit']")).click();
-	    // Make sure we are on the new repo page
-	    String expected = "https://github.com/" + USERNAME + "/" + REPO;
-	    String observed = driver.getCurrentUrl();
-	    assertEquals(expected, observed);
+	    boolean samePage = driver.getCurrentUrl() == "https://github.com/repositories" || driver.getCurrentUrl() == "https://github.com/new"  ;
+	    assertTrue(samePage);
   }
 
   @After
@@ -73,6 +77,7 @@ public class US2S2MakeNewRepo {
       fail(verificationErrorString);
     }
   }
+
   private boolean isElementPresent(By by) {
     try {
       driver.findElement(by);

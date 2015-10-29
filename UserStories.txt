@@ -58,8 +58,16 @@ Then the user will be navigated to the page for the newly created repository.
 Given a logged in user on the new repository page with an already-created repo,
 When the user tries to create a new repository with the same name
 Then the user will remain on the same page without any changes.
+
 -- Scenario 4:
+Given a logged in user on the new repository page,
+When the user creates a repository with a description,
+Then the repository will contain that description.
+
 -- Scenario 5:
+Given a logged in user on the new repository page,
+When the user creates a repository and checks the README checkbox,
+Then the repository will contain a README.
 
 ----------------------
 -- User Story #3:
