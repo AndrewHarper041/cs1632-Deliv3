@@ -1,6 +1,5 @@
-// Test for US-2 Scenario-4
-// Test to make sure we can make a repository with an appropriate description
-
+// Test for US-2 Scenario-5
+// Test to make sure that a our repository contains a readme.md when we specify one.
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -9,15 +8,14 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class US2S4Description {
+public class US2S5Readme {
   private WebDriver driver;
   private String baseUrl;
   private StringBuffer verificationErrors = new StringBuffer();
   
   private static final String USERNAME = "pittqa";
   private static final String PASSWORD = "pittqa1";
-  private static final String REPO = "mynameaborat";
-  private static final String DESC = "High five!!!";
+  private static final String REPO = "windows69";
   private void logIn(String username, String password) {
 	  driver.get(baseUrl + "/");
 	  driver.findElement(By.linkText("Sign in")).click();
@@ -32,16 +30,8 @@ public class US2S4Description {
 	    driver.findElement(By.linkText("Delete this repository")).click();
 	    driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).clear();
 	    driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys(repo);
-	    driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();	  
+	    driver.findElement(By.className("btn")).click();	  
 }
-  private void createRepository(String username, String repo, String desc) {
-	    driver.get("https://github.com/new");
-	    driver.findElement(By.id("repository_name")).clear();
-	    driver.findElement(By.id("repository_name")).sendKeys(repo);
-	    driver.findElement(By.id("repository_description")).clear();
-	    driver.findElement(By.id("repository_description")).sendKeys(desc);
-	    driver.findElement(By.xpath("//button[@type='submit']")).click();
-  }
 
   @Before
   public void setUp() throws Exception {
@@ -52,24 +42,30 @@ public class US2S4Description {
   }
   
 /**
- * Make sure when we enter something into the description field when creating a repo,
- * that the repo will actually contain that description.
- * We know this if, when we go to our list of repositories, the description is there.
+ * Make sure when we check the readme check box on the repository form
+ * that the repository will contain a file named readme.md
+ * We know this if, when we go to our repository page, the readme.md exists there.
  */
   @Test
-  public void testDescription() throws Exception {
-	    createRepository(USERNAME, REPO, DESC);
-	    driver.get("https://github.com/" + USERNAME + "?tab=repositories");
-	    List<WebElement> descElements = driver.findElements(By.className("repo-list-description"));
-	    System.out.println(descElements.size());
-	    boolean descExists = false;
-	    for (WebElement e: descElements) {;
-	    	if (e.getText().equals(DESC)) {
-	    		descExists = true;
+  public void testReadme() throws Exception {
+	    driver.get("https://github.com/new");
+	    driver.findElement(By.id("repository_name")).clear();
+	    driver.findElement(By.id("repository_name")).sendKeys(REPO);
+	    driver.findElement(By.id("repository_auto_init")).click(); // readme checkbox
+	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	    List<WebElement> fileElements = driver.findElements(By.className("js-directory-link"));
+	    boolean readmeExists = false;
+	    for (WebElement e: fileElements) {
+	    	if (e.getText().equals("README.md")) {
+	    		readmeExists = true;
+	    		// Make sure that the readme file link takes us to the page for the readme file.
+	    		e.click();
+	    		String readmeUrl = "https://github.com/" + USERNAME + "/" + REPO + "/blob/master/README.md";
+	    		assertEquals(readmeUrl, driver.getCurrentUrl());
 	    		break;
 	    	}
 	    }
-	   assertTrue(descExists);
+	    assertTrue(readmeExists);
   }
 
   @After
