@@ -43,6 +43,17 @@ public class US3S6DeleteRepo {
       driver.findElement(By.id("repository_name")).sendKeys("temprepo");
       driver.findElement(By.xpath("//button[@type='submit']")).click();
   }
+  
+  //Deletes the temprepo
+  private void deleteRepo() {
+	  driver.get(baseUrl + "/");
+	  driver.findElement(By.cssSelector("span.repo")).click();
+	  driver.findElement(By.xpath("(//a[contains(@href, '/cs1632user/temprepo/settings')])[2]")).click();
+	  driver.findElement(By.linkText("Delete this repository")).click();
+	  driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).clear();
+	  driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys("cs1632user/temprepo");
+	  driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();
+  }
 
   @Before
   public void setUp() throws Exception {
@@ -55,19 +66,19 @@ public class US3S6DeleteRepo {
 
   @Test
   public void testUS3US5DeleteRepo() throws Exception {
-        driver.get(baseUrl + "/");
-        driver.findElement(By.linkText("temprepo")).click();
-        driver.findElement(By.xpath("//ul[3]/li/a/span[2]")).click();
-        driver.findElement(By.linkText("Delete this repository")).click();
-        driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).clear();
-        driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys("cs1632user/temprepo");
-        driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();
-        driver.findElement(By.id("your-repos-filter")).clear();
-        driver.findElement(By.id("your-repos-filter")).sendKeys("temprepo");
-        driver.findElement(By.linkText("All")).click();
-        driver.findElement(By.id("your-repos-filter")).clear();
-        driver.findElement(By.id("your-repos-filter")).sendKeys("");
-        assertEquals("newrepo", driver.findElement(By.cssSelector("span.repo")).getText());
+	  driver.get(baseUrl + "/");
+      driver.findElement(By.id("your-repos-filter")).clear();
+      driver.findElement(By.id("your-repos-filter")).sendKeys("temprepo");
+      driver.findElement(By.cssSelector("span.repo")).click();
+      driver.findElement(By.xpath("//ul[3]/li/a/span[2]")).click();
+      driver.findElement(By.linkText("Delete this repository")).click();
+      driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).clear();
+      driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys("cs1632user/temprepo");
+      assertEquals("I understand the consequences, delete this repository", driver.findElement(By.xpath("(//button[@type='submit'])[5]")).getText());
+      driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();
+      driver.findElement(By.id("your-repos-filter")).clear();
+      driver.findElement(By.id("your-repos-filter")).sendKeys("temprepo");
+      assertEquals("1", driver.findElement(By.cssSelector("span.counter")).getText());
   }
 
   @After

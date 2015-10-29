@@ -48,7 +48,7 @@ public class US3S1FeaturesToggle {
 	  driver.get(baseUrl + "/");
       driver.findElement(By.id("your-repos-filter")).clear();
       driver.findElement(By.id("your-repos-filter")).sendKeys("newrepo");
-      driver.findElement(By.xpath("//ul[@id='repo_listing']/li[2]/a/span[2]/span")).click();
+      driver.findElement(By.xpath("//ul[@id='repo_listing']/li[1]/a/span[2]/span")).click();
       driver.findElement(By.xpath("//ul[3]/li/a/span[2]")).click();
       driver.findElement(By.id("wiki-feature")).click();
       driver.findElement(By.id("wiki-feature")).click();

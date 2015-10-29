@@ -62,8 +62,10 @@ public class US3S3AddWebhook {
 
   @Test
   public void testUS3S3AddWebhook() throws Exception {
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("span.repo")).click();
+	    driver.get(baseUrl + "/");
+        driver.findElement(By.id("your-repos-filter")).clear();
+        driver.findElement(By.id("your-repos-filter")).sendKeys("newrepo");
+        driver.findElement(By.xpath("//ul[@id='repo_listing']/li[1]/a/span[2]/span")).click();
         driver.findElement(By.xpath("//ul[3]/li/a/span[2]")).click();
         driver.findElement(By.linkText("Webhooks & services")).click();
         driver.findElement(By.linkText("Add webhook")).click();

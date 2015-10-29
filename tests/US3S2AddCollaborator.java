@@ -4,6 +4,7 @@
 //NOTES:
 //Needed js hack
 //Must delete collaborator after
+//Sometimes fails, added sleep that makes it not fail. Usually.
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -80,6 +81,10 @@ public class US3S2AddCollaborator {
       jsExecutor.executeScript("$(arguments[0]).change();", driver.findElement(By.id("search-member")));
       
       driver.findElement(By.id("search-member")).click();
+      
+      //Was breaking here sometimes so sleep I guess
+      Thread.sleep(4000);
+      
       driver.findElement(By.xpath("//div[@id='collaborators']/form/div[4]/ul/li")).click();
       driver.findElement(By.cssSelector("button.btn.js-add-new-collab")).click();
       driver.findElement(By.xpath("//button[@type='submit']")).click();
