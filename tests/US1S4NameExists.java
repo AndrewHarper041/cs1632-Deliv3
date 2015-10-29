@@ -31,6 +31,11 @@ public class US1S4NameExists {
         driver.findElement(By.linkText("Sign up")).click();
         driver.findElement(By.id("user_login")).clear();
         driver.findElement(By.id("user_login")).sendKeys("laboon");
+        
+        //Hack to trigger the onchange javascript event we are looking for.
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("$(arguments[0]).change();", driver.findElement(By.id("user_login")));
+        
         assertEquals("Username is already taken", driver.findElement(By.cssSelector("dd.error")).getText());
   }
 
