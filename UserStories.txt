@@ -12,7 +12,7 @@ I want to be able to create a new account
 So that I can use features that require an account.
 
 -- Scenario 1:
-Given a not previously logged in or registered on github.com,
+Given an unregistered user on github.com,
 When they click the sign up button,
 Then they will be directed to a page where they can sign up.
 
@@ -22,17 +22,17 @@ When the create account button is pressed,
 Then the user will be prompted to fill out the needed values of the form. 
 
 -- Scenario 3:
-Given that the sign up form has username/email/password fields filled out with unique name/email and password to specification,
+Given that the sign up form has username/email/password fields filled out with unique name/email and password to specifications,
 When the create account button is pressed,
 Then a new user will be created under that username and user will be navigate to plan selection.
 
 -- Scenario 4:
 Given a user attempting to create an account with a user name that already exists,
-When the username field contains an existing user name,
+When the username field contains an existing username,
 Then the new user will be prompted to provide an unique name.
 
 -- Scenario 5:
-Given a user attempting to create an account with a valid user name,
+Given a user attempting to create an account with a valid username,
 When the password input is not valid,
 Then the user will be prompted and told what the password requirements are.
 
@@ -67,7 +67,7 @@ Then the repository will contain that description.
 -- Scenario 5:
 Given a logged in user on the new repository page,
 When the user creates a repository and checks the README checkbox,
-Then the repository will contain a README.
+Then the repository will contain a README.md file.
 
 ----------------------
 -- User Story #3:
@@ -84,7 +84,7 @@ Then they will be able to toggle the different features settings as desired.
 
 -- Scenario 2:
 Given a logged in user with a repo,
-When a user navigates to the collaborator page and fills the form with the identity of a github user,
+When a user navigates to the collaborator page and fills the form with the identity of a GitHub user,
 Then the specified user will be added as an approved user or the repo.
 
 -- Scenario 3:
@@ -119,18 +119,22 @@ So that I can contribute to and get updates on work done on interesting projects
 Given a logged in user,
 When the user opts to watch a repository,
 Then the repository will be added to the user's watch list. 
+
 -- Scenario 2:
 Given a logged in user,
 When the user stars a repository,
 Then the repository will be one of the user's stars.
+
 -- Scenario 3:
 Given a logged in user,
 When the user clicks the fork button on a repository,
 Then the user will have a forked copy of the repository.
+
 -- Scenario 4:
 Given a logged in user with a watched repository,
 When the user unwatches the repository,
 Then the repository will no longer appear in the user's watchlist.
+
 -- Scenario 5:
 Given a logged in user with a starred repository,
 When the user unstars the repository,
