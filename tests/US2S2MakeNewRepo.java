@@ -1,4 +1,4 @@
-//Test for US-1 Scenario-2
+//Test for US-2 Scenario-2
 //Tests that a logged in user can successfully make a repo
 
 

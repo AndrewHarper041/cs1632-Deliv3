@@ -91,7 +91,7 @@ Then the user will be able to add a new deploy key to the repo.
 
 -- Scenario 5: 
 Given a logged in user with a repo,
-When a user naviagates to the options page and clicks on the transfer ownership button,
+When a user navigates to the options page and clicks on the transfer ownership button,
 Then they will be able to select a new user and transer owner rights of the repo to them.
 
 -- Scenario 6: 
