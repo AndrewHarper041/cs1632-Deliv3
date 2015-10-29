@@ -75,26 +75,26 @@ Then the repository will contain a README.
 
 As a registered GitHub user
 I want to be able to view and edit repository settings
-So that I can get my repository set up to my specifications and perform administerial actions.
+So that I can get my repository set up to my specifications and perform administrative actions.
 
 -- Scenario 1:
 Given a logged in user with a repo,
-When a user naviagates to the options page,
+When a user navigates to the options page,
 Then they will be able to toggle the different features settings as desired.
 
 -- Scenario 2:
 Given a logged in user with a repo,
-When a user naviagates to the collaborator page and fills the form with the identity of a github user,
-Then the specefies user will be added as an approved user or the repo.
+When a user navigates to the collaborator page and fills the form with the identity of a github user,
+Then the specified user will be added as an approved user or the repo.
 
 -- Scenario 3:
 Given a logged in user with a repo,
-When a user naviagates to the webhooks and services page and clicks add webhook,
+When a user navigates to the webhooks and services page and clicks add webhook,
 Then the user will be able to create a new webhook to specification.
 
 -- Scenario 4:
 Given a logged in user with a repo,
-When a user naviagates to the add deploy key page,
+When a user navigates to the add deploy key page,
 Then the user will be able to add a new deploy key to the repo.
 
 -- Scenario 5: 
@@ -104,7 +104,7 @@ Then they will be able to select a new user and transer owner rights of the repo
 
 -- Scenario 6: 
 Given a logged in user with a repo,
-When a user naviagates to the options page and clicks on the delete repo button,
+When a user navigates to the options page and clicks on the delete repo button,
 Then they will be able delete their repo.
 
 ----------------------
@@ -112,11 +112,26 @@ Then they will be able delete their repo.
 ----------------------
 
 As a registered GitHub user
-I want to be able to follow repositories
-So that I can get updates on work done on interesting projects.
+I want to be able to follow and interact with other repositories
+So that I can contribute to and get updates on work done on interesting projects.
 
 -- Scenario 1:
+Given a logged in user,
+When the user opts to watch a repository,
+Then the repository will be added to the user's watch list. 
 -- Scenario 2:
+Given a logged in user,
+When the user stars a repository,
+Then the repository will be one of the user's stars.
 -- Scenario 3:
+Given a logged in user,
+When the user clicks the fork button on a repository,
+Then the user will have a forked copy of the repository.
 -- Scenario 4:
+Given a logged in user with a watched repository,
+When the user unwatches the repository,
+Then the repository will no longer appear in the user's watchlist.
 -- Scenario 5:
+Given a logged in user with a starred repository,
+When the user unstars the repository,
+Then the repository will no longer be one of the user's stars.
