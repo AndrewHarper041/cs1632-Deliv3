@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.gargoylesoftware.htmlunit.javascript.host.Console;
+
 public class US2S2MakeNewRepo {
   private WebDriver driver;
   private String baseUrl;
@@ -54,6 +56,7 @@ public class US2S2MakeNewRepo {
 	    // Make sure we are on the new repo page
 	    String expected = "https://github.com/" + USERNAME + "/" + REPO;
 	    String observed = driver.getCurrentUrl();
+
 	    assertEquals(expected, observed);
   }
 
