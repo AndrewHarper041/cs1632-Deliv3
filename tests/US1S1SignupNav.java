@@ -15,7 +15,7 @@ public class US1S1SignupNav {
   private String baseUrl;
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
-
+  	
   @Before
   public void setUp() throws Exception {
     driver = new FirefoxDriver();
