@@ -1,14 +1,13 @@
-// Test for US-4 Scenario-1
-// Test to make sure that repository watching functionality works.
+// Test for US-4 Scenario-5
+// Test to make sure that unstarring functionality works.
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class US4S1WatchRepo {
+public class US4S5UnstarRepo {
   private WebDriver driver;
   private String baseUrl;
   private StringBuffer verificationErrors = new StringBuffer();
@@ -24,6 +23,11 @@ public class US4S1WatchRepo {
       driver.findElement(By.id("password")).sendKeys(password);
       driver.findElement(By.name("commit")).click();
   }
+  private void starRepo() {
+	  driver.get(baseUrl + "/lhartikk/ArnoldC");
+	  // Click star button
+	    driver.findElement(By.xpath("//form[2]/button")).click();
+  }
 
   @Before
   public void setUp() throws Exception {
@@ -31,44 +35,25 @@ public class US4S1WatchRepo {
     baseUrl = "https://github.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     logIn(USERNAME, PASSWORD);
+    starRepo();
   }
   
 /**
- * When we watch a repo, it should appear in the list of watched repos.
+ * When we unstar a repo, it should no longer appear in the user's stars page.
  */
   @Test
-  public void testWatchRepo() throws Exception {
+  public void testUnstarRepo() throws Exception {
 	  driver.get(baseUrl + "/lhartikk/ArnoldC");
-	  // Open watch menu on repo
-	  driver.findElement(By.cssSelector("span.js-select-button")).click();
-	  List<WebElement> watchOptions = driver.findElements(By.className("select-menu-item-heading"));
-	  boolean watchButtonClicked = false;
-	  for (WebElement e: watchOptions) {
-		  if (e.getText().equalsIgnoreCase("Watching")) {
-			  // Click on watch button
-			  e.click();
-			  watchButtonClicked = true;
-			  break;
-		  }
-	  }
-	  assertTrue(watchButtonClicked);
-	  // Check that repo is in  watch list
-	  driver.get("https://github.com/watching");
-	  List<WebElement> repoNames = driver.findElements(By.className("repo-name"));
-	 boolean repoWatched = false;
-	  for (WebElement e: repoNames) {
-		  if (e.getText().equalsIgnoreCase( "ArnoldC")) {
-			  repoWatched = true;
-			  break;
-		  }
-	  }
-	  assertTrue(repoWatched);
+	  // Click unstar button
+	  driver.findElement(By.xpath("//li[2]/div/form/button")).click();
+	  // Make sure repo is not starred
+	  driver.get("https://github.com/stars");
+	  WebElement repo = driver.findElement(By.partialLinkText("ArnoldC"));
+	  assertNull(repo);
   }
 
   @After
   public void tearDown() throws Exception {
-	// Unwatch repo
-	driver.findElement(By.linkText("Unwatch all")).click();
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {

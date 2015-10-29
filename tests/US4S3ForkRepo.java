@@ -1,14 +1,13 @@
-// Test for US-4 Scenario-1
-// Test to make sure that repository watching functionality works.
+// Test for US-4 Scenario-3
+// Test to make sure that repository forking works.
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class US4S1WatchRepo {
+public class US4S3ForkRepo {
   private WebDriver driver;
   private String baseUrl;
   private StringBuffer verificationErrors = new StringBuffer();
@@ -24,7 +23,13 @@ public class US4S1WatchRepo {
       driver.findElement(By.id("password")).sendKeys(password);
       driver.findElement(By.name("commit")).click();
   }
-
+  private void deleteRepository(String username, String repo) {
+	    driver.get("https://github.com/" + username + "/" + repo + "/settings");
+	    driver.findElement(By.linkText("Delete this repository")).click();
+	    driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).clear();
+	    driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys(repo);
+	    driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();	  
+}
   @Before
   public void setUp() throws Exception {
     driver = new FirefoxDriver();
@@ -34,41 +39,23 @@ public class US4S1WatchRepo {
   }
   
 /**
- * When we watch a repo, it should appear in the list of watched repos.
+ * When we fork a repo, it should appear in the user's repo list.
  */
   @Test
-  public void testWatchRepo() throws Exception {
+  public void testForkRepo() throws Exception {
 	  driver.get(baseUrl + "/lhartikk/ArnoldC");
-	  // Open watch menu on repo
-	  driver.findElement(By.cssSelector("span.js-select-button")).click();
-	  List<WebElement> watchOptions = driver.findElements(By.className("select-menu-item-heading"));
-	  boolean watchButtonClicked = false;
-	  for (WebElement e: watchOptions) {
-		  if (e.getText().equalsIgnoreCase("Watching")) {
-			  // Click on watch button
-			  e.click();
-			  watchButtonClicked = true;
-			  break;
-		  }
-	  }
-	  assertTrue(watchButtonClicked);
-	  // Check that repo is in  watch list
-	  driver.get("https://github.com/watching");
-	  List<WebElement> repoNames = driver.findElements(By.className("repo-name"));
-	 boolean repoWatched = false;
-	  for (WebElement e: repoNames) {
-		  if (e.getText().equalsIgnoreCase( "ArnoldC")) {
-			  repoWatched = true;
-			  break;
-		  }
-	  }
-	  assertTrue(repoWatched);
+	  // Click fork button
+	  driver.findElement(By.xpath("//button[@type='submit']")).click();
+	  // Make sure fork is in repo list
+	  driver.get("https://github.com/" + USERNAME + "?tab=repositories");
+	  WebElement repo = driver.findElement(By.partialLinkText("ArnoldC"));
+	  assertNotNull(repo);
   }
 
   @After
   public void tearDown() throws Exception {
-	// Unwatch repo
-	driver.findElement(By.linkText("Unwatch all")).click();
+	 // Delete forked repo
+	deleteRepository(USERNAME, "ArnoldC");
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
     if (!"".equals(verificationErrorString)) {

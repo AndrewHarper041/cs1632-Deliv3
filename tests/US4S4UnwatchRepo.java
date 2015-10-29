@@ -1,5 +1,5 @@
-// Test for US-4 Scenario-1
-// Test to make sure that repository watching functionality works.
+// Test for US-4 Scenario-4
+// Test to make sure that repository unwatching functionality works.
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class US4S1WatchRepo {
+public class US4S4UnwatchRepo {
   private WebDriver driver;
   private String baseUrl;
   private StringBuffer verificationErrors = new StringBuffer();
@@ -24,6 +24,19 @@ public class US4S1WatchRepo {
       driver.findElement(By.id("password")).sendKeys(password);
       driver.findElement(By.name("commit")).click();
   }
+  private void watchRepo() {
+	  driver.get(baseUrl + "/lhartikk/ArnoldC");
+	  // Open watch menu on repo
+	  driver.findElement(By.cssSelector("span.js-select-button")).click();
+	  List<WebElement> watchOptions = driver.findElements(By.className("select-menu-item-heading"));
+	  for (WebElement e: watchOptions) {
+		  if (e.getText().equalsIgnoreCase("Watching")) {
+			  // Click on watch button
+			  e.click();
+			  break;
+		  }
+	  }	  
+  }
 
   @Before
   public void setUp() throws Exception {
@@ -31,28 +44,29 @@ public class US4S1WatchRepo {
     baseUrl = "https://github.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     logIn(USERNAME, PASSWORD);
+    watchRepo();
   }
   
 /**
- * When we watch a repo, it should appear in the list of watched repos.
+ * When we unwatch a repo, it should no longer appear in the watch list.
  */
   @Test
-  public void testWatchRepo() throws Exception {
+  public void testUnWatchRepo() throws Exception {
 	  driver.get(baseUrl + "/lhartikk/ArnoldC");
 	  // Open watch menu on repo
 	  driver.findElement(By.cssSelector("span.js-select-button")).click();
 	  List<WebElement> watchOptions = driver.findElements(By.className("select-menu-item-heading"));
-	  boolean watchButtonClicked = false;
+	  boolean unwatchButtonClicked = false;
 	  for (WebElement e: watchOptions) {
-		  if (e.getText().equalsIgnoreCase("Watching")) {
-			  // Click on watch button
+		  if (e.getText().equalsIgnoreCase("Not watching")) {
+			  // Click on unwatch button
 			  e.click();
-			  watchButtonClicked = true;
+			  unwatchButtonClicked = true;
 			  break;
 		  }
-	  }
-	  assertTrue(watchButtonClicked);
-	  // Check that repo is in  watch list
+	  }	  
+	  assertTrue(unwatchButtonClicked);
+	  // Repo should not be in watch list
 	  driver.get("https://github.com/watching");
 	  List<WebElement> repoNames = driver.findElements(By.className("repo-name"));
 	 boolean repoWatched = false;
@@ -62,7 +76,7 @@ public class US4S1WatchRepo {
 			  break;
 		  }
 	  }
-	  assertTrue(repoWatched);
+	  assertFalse(repoWatched);
   }
 
   @After
