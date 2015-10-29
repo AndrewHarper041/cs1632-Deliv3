@@ -29,12 +29,10 @@ public class US4S4UnwatchRepo {
 	  // Open watch menu on repo
 	  driver.findElement(By.cssSelector("span.js-select-button")).click();
 	  List<WebElement> watchOptions = driver.findElements(By.className("select-menu-item-heading"));
-	  boolean watchButtonClicked = false;
 	  for (WebElement e: watchOptions) {
 		  if (e.getText().equalsIgnoreCase("Watching")) {
 			  // Click on watch button
 			  e.click();
-			  watchButtonClicked = true;
 			  break;
 		  }
 	  }	  
