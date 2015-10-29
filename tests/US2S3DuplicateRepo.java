@@ -1,5 +1,5 @@
-//Test for US-1 Scenario-2
-//Tests that a logged in user can successfully make a repo
+//Test for US-2 Scenario-3
+// Test to make sure we are not allowed to create a duplicate repository
 
 
 import java.util.regex.Pattern;
@@ -30,10 +30,10 @@ public class US2S3DuplicateRepo {
       driver.findElement(By.name("commit")).click();
   }
   private void deleteRepository(String username, String repo) {
-	    driver.findElement(By.xpath("(//a[contains(@href, '/" +username + "/" + repo + "/settings')])[2]")).click();
+	    driver.get("https://github.com/" + username + "/" + repo + "/settings");
 	    driver.findElement(By.linkText("Delete this repository")).click();
 	    driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).clear();
-	    driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys("testrepo");
+	    driver.findElement(By.cssSelector("div.facebox-content.dangerzone > form.js-normalize-submit > p > input[name=\"verify\"]")).sendKeys(repo);
 	    driver.findElement(By.xpath("(//button[@type='submit'])[5]")).click();	  
 }
   private void createRepository(String username, String password, String repo) {
